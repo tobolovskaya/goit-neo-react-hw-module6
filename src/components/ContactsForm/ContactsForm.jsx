@@ -1,45 +1,44 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, selectContacts } from '../../redux/contactsSlice';
-import { nanoid } from 'nanoid';
-import styles from './ContactsForm.module.css';
+import { addContact } from '../../redux/contactsSlice';
+import { selectContacts } from '../../redux/contactsSlice';
 
-const ContactsForm = () => {
+function ContactForm() {
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(selectContacts);
-  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (contacts.some(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+    if (contacts.some(contact => contact.name === name)) {
       alert(`${name} is already in contacts`);
       return;
     }
-    dispatch(addContact({ id: nanoid(), name, number }));
+    dispatch(addContact({ name, number }));
     setName('');
     setNumber('');
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className={styles.input}
+        placeholder="Name"
+        required
       />
       <input
         type="tel"
-        placeholder="Number"
         value={number}
         onChange={(e) => setNumber(e.target.value)}
-        className={styles.input}
+        placeholder="Phone number"
+        required
       />
-      <button type="submit" className={styles.button}>Add Contact</button>
+      <button type="submit">Add Contact</button>
     </form>
   );
-};
+}
 
-export default ContactsForm;
+export default ContactForm;

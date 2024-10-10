@@ -1,7 +1,8 @@
 import React from 'react';
-import ContactsForm from './components/ContactsForm/ContactsForm';
+import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
 import SearchBox from './components/SearchBox/SearchBox';
+
 import styles from './App.module.css';
 
 const App = () => {
@@ -11,7 +12,7 @@ const App = () => {
       
       <section className={styles.section}>
         <h2 className={styles.subtitle}>Add New Contact</h2>
-        <ContactsForm />
+        <ContactForm />
       </section>
 
       <section className={styles.section}>
