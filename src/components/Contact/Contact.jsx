@@ -4,28 +4,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faPhone } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Contact.module.css";
 
-const Contact = ({ id, name, number }) => {
+const Contact = ({ contact: { id, name, number } }) => {
   const dispatch = useDispatch();
 
+  const handleDelete = () => {
+    dispatch(deleteContact(id));
+  };
+
   return (
-    <div className={styles.contactItem}>
-      <div className={styles.contactInfo}>
-        <div className={styles.contactDetail}>
-          <FontAwesomeIcon icon={faUser} className={styles.icon} />
-          <span className={styles.name}>{name}</span>
-        </div>
-        <div className={styles.contactDetail}>
-          <FontAwesomeIcon icon={faPhone} className={styles.icon} />
-          <span className={styles.number}>{number}</span>
-        </div>
-      </div>
-      <button
-        className={styles.deleteButton}
-        onClick={() => dispatch(deleteContact(id))}
-      >
+    <li className={styles.contactItem}>
+      <span className={styles.contactIcon}>
+        <FontAwesomeIcon icon={faUser} />
+      </span>
+      <span>{name}</span>
+      <span className={styles.contactIcon}>
+        <FontAwesomeIcon icon={faPhone} />
+      </span>
+      <span>{number}</span>
+      <button className={styles.deleteButton} onClick={handleDelete}>
         Delete
       </button>
-    </div>
+    </li>
   );
 };
 
